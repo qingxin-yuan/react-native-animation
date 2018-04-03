@@ -39,11 +39,13 @@ export default class JSParticle extends Component {
     // play the file tone.mp3
     try {
       SoundPlayer.playSoundFile("warden", "mp3");
-      SoundPlayer.onFinishedPlaying((success: boolean) => { // success is true when the sound is played
-        console.log('finished playing', success);
+
+      SoundPlayer.onFinishedPlaying((success: boolean) => {
+        // success is true when the sound is played
+        console.log("finished playing", success);
       });
     } catch (e) {
-      console.log(`cannot play the sound file`, e);
+      throw new Error(`cannot play the sound file: `, e);
     }
   }
 
@@ -91,7 +93,6 @@ export default class JSParticle extends Component {
         easing: Easing.elastic(0.4)
       })
     ]).start(() => {
-      // TODO: loop
       this._reset();
       this._startAnimation();
     });
@@ -108,7 +109,6 @@ export default class JSParticle extends Component {
         style={{
           position: "absolute",
           opacity: this.state.opacity,
-          // fontSize: this.size,
           transform: [
             { scale: this.size },
             { translateX: this.state.translateX },
@@ -118,23 +118,7 @@ export default class JSParticle extends Component {
         }}
       >
         <Text>🍺</Text>
-        {/* <Image 
-        style={{width: this.size, height: this.size}}
-        source={require('./sunglasses-emoji.png')}  
-        /> */}
       </Animated.View>
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   animation: {
-//     position: "absolute",
-//     opacity: this.state.opacity,
-//     transform: [
-//       {translateX :this.state.translateX},
-//       {translateY: this.state.translateY},
-//       {rotate: this.state.rotation},
-//     ]
-//   }
-// })
